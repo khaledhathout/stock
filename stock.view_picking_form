@@ -52,7 +52,10 @@
                         <group>
                             <field name="date"/>
                             <field name="min_date"/>
-                            <field name="origin" placeholder="e.g. PO0032" class="oe_inline"/>
+                            <field name="x_supplier_reference"/>
+                            <field name="origin" 
+                                   placeholder="e.g. PO0032" 
+                                   class="oe_inline"/>
                             <label for="owner_id" groups="stock.group_tracking_owner"/>
                             <div groups="stock.group_tracking_owner">
                                 <field name="owner_id"/>
