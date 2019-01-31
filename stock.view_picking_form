@@ -11,9 +11,19 @@
                     <button name="do_unreserve" string="Unreserve" groups="base.group_user" type="object" attrs="{'invisible': [('quant_reserved_exist', '=', False)]}"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,partially_available,assigned,done" statusbar_colors="{&quot;shipping_except&quot;:&quot;red&quot;,&quot;invoice_except&quot;:&quot;red&quot;,&quot;waiting_date&quot;:&quot;blue&quot;}"/>
                 </header>
+  
                 <sheet>
                     <div class="oe_right oe_button_box">
-                        <button name="do_partial_open_barcode" groups="stock.group_stock_user" type="object" class="oe_stock_scan_button" attrs="{'invisible': ['|',('pack_operation_exist', '=', True),('state','not in',('assigned', 'partially_available'))]}"><img src="/stock/static/src/img/scan.png" class="oe_stock_scan_image oe_stock_scan_image_btn"/></button>
+                        <button name="do_partial_open_barcode" 
+                                groups="stock.group_stock_user" 
+                                type="object" class="oe_stock_scan_button" 
+                                attrs="{'invisible': ['|',
+                                       ('pack_operation_exist', '=', True),
+                                       ('state','not in',('assigned', 'partially_available'))]}">
+                          <img src="/stock/static/src/img/scan.png" 
+                               class="oe_stock_scan_image oe_stock_scan_image_btn"/>
+                      </button>
+                      
                         <button name="open_barcode_interface" groups="stock.group_stock_user" type="object" class="oe_stock_scan_button" attrs="{'invisible': ['|',('pack_operation_exist', '=', False),('state','not in',('assigned', 'partially_available'))]}"><img src="/stock/static/src/img/scan.png" class="oe_stock_scan_image oe_stock_scan_image_btn"/></button>
                     </div>
                     <h1>
@@ -61,25 +71,47 @@
 
 
 
-                        <page string="Operations" attrs="{'invisible': ['|', ('state','!=','done'), ('pack_operation_ids','=',[])]}">
-                            <field name="pack_operation_ids" context="{'default_picking_id': active_id, 
-                                                                                             'default_location_id': location_id, 
-                                                                                             'date': date,
-                                                                                             'default_location_dest_id': location_dest_id}">
+                        <page string="Operations" attrs="
+                                                         {'invisible': ['|', 
+                                                         ('state','!=','done'), 
+                                                         ('pack_operation_ids','=',[])]}">
+                          
+                            <field name="pack_operation_ids" 
+                                   context="{'default_picking_id': 
+                                            active_id,
+                                            'default_location_id': 
+                                            location_id,
+                                            'date': 
+                                            date,
+                                            'default_location_dest_id': 
+                                            location_dest_id
+                                            }">
+                              
                                 <tree editable="top">
 
-                                    <field name="package_id" groups="stock.group_tracking_lot"/>
+                                    <field name="package_id" 
+                                           groups="stock.group_tracking_lot"/>
                                     <field name="date"/>
-                                    <field name="product_id" on_change="product_id_change(product_id, product_uom_id, product_qty)"/>
-                                    <field name="product_uom_id" groups="product.group_uom"/>
-                                    <field name="lot_id" domain="[('product_id','=?', product_id)]" context="{'product_id': product_id}" groups="stock.group_production_lot"/>
+                                    <field name="product_id" 
+                                           on_change="product_id_change(product_id, product_uom_id, product_qty)"/>
+                                    <field name="product_uom_id" 
+                                           groups="product.group_uom"/>
+                                    <field name="lot_id" 
+                                           domain="[('product_id','=?', product_id)]" context="{'product_id': product_id}" 
+                                           groups="stock.group_production_lot"/>
                                     <field name="date"/>
                                     <field name="picking_id" invisible="1"/>
-                                    <field name="owner_id" groups="stock.group_tracking_owner"/>
-                                    <field name="product_qty" attrs="{'required': [('product_id', '!=', False)]}"/>
-                                    <field name="location_id" domain="[('id', 'child_of', parent.location_id)]"/>
-                                    <field name="location_dest_id" domain="[('id', 'child_of', parent.location_dest_id)]"/>
-                                    <field name="result_package_id" groups="stock.group_tracking_lot" context="{'location_id': location_dest_id}"/>
+                                    <field name="owner_id" 
+                                           groups="stock.group_tracking_owner"/>
+                                    <field name="product_qty" 
+                                           attrs="{'required': [('product_id', '!=', False)]}"/>
+                                    <field name="location_id" 
+                                           domain="[('id', 'child_of', parent.location_id)]"/>
+                                    <field name="location_dest_id" 
+                                           domain="[('id', 'child_of', parent.location_dest_id)]"/>
+                                    <field name="result_package_id" 
+                                           groups="stock.group_tracking_lot" 
+                                           context="{'location_id': location_dest_id}"/>
                                 </tree>
                             </field>
                             <p class="oe_grey" groups="stock.group_tracking_lot">
